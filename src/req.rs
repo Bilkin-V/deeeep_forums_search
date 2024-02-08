@@ -47,7 +47,7 @@ pub async fn search(search: &str, args: &Args, client: &Client) -> Result<Vec<Po
             .as_str(),
     )?;
 
-    let mut heap = BinaryHeap::<(isize, Post)>::with_capacity(10);
+    let mut heap = BinaryHeap::<(isize, Post)>::with_capacity(args.display);
 
     for post in posts {
         let best_match = sublime_fuzzy::best_match(search, &post.title);
@@ -67,7 +67,7 @@ pub async fn search(search: &str, args: &Args, client: &Client) -> Result<Vec<Po
                     continue;
                 }
 
-                if heap.len() == 10 {
+                if heap.len() == args.display {
                     heap.pop();
                 }
                 heap.push((-s.score(), post));
