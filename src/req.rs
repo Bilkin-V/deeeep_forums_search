@@ -75,9 +75,10 @@ pub async fn search(search: &str, args: &Args, client: &Client) -> Result<Vec<Po
             None => continue,
         }
     }
+    let mut heap = heap.into_vec();
+    heap.sort();
 
     return Ok(heap
-        .into_vec()
         .into_iter()
         .map(|(_, post)| post)
         .collect::<Vec<Post>>());
